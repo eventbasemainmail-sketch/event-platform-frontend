@@ -1,7 +1,8 @@
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  Navigate,
 } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage";
@@ -16,41 +17,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Redirect homepage to Admin Dashboard */}
+        <Route path="/" element={<Navigate to="/admin" replace />} />
 
-        <Route
-          path="/admin"
-          element={<AdminDashboard />}
-        />
+        {/* Admin */}
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/create-event" element={<CreateEvent />} />
+        <Route path="/admin/events/:id" element={<ManageEvent />} />
+        <Route path="/admin/events/:id/edit" element={<EditEvent />} />
 
-        <Route
-          path="/admin/create-event"
-          element={<CreateEvent />}
-        />
+        {/* Public Event Pages */}
+        <Route path="/event/:slug" element={<LandingPage />} />
+        <Route path="/register/:slug" element={<RegistrationPage />} />
 
-        <Route
-          path="/admin/events/:id"
-          element={<ManageEvent />}
-        />
+        {/* QR Scanner */}
+        <Route path="/scanner" element={<ScannerPage />} />
 
-        <Route
-          path="/admin/events/:id/edit"
-          element={<EditEvent />}
-        />
-
-        <Route
-          path="/event/:slug"
-          element={<LandingPage />}
-        />
-
-        <Route
-          path="/scanner"
-          element={<ScannerPage />}
-        />
-
-        <Route
-          path="/register/:slug"
-          element={<RegistrationPage />}
-        />
+        {/* 404 - Redirect unknown routes */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
